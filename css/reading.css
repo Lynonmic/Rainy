@@ -1,0 +1,75 @@
+body{
+    font-family: 'Times New Roman', Times, serif;
+}
+*{
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+:root{
+    --color1:rgb(13, 124, 102);
+    --color2:rgb(65, 179, 162);
+    --color3:rgb(189, 232, 202);
+    --color4:rgb(215, 195, 241);
+    --color5:rgb(255, 255, 255);
+    --bgColor:rgb(23, 21, 59);
+}
+/* Navbar */
+.Navbar{
+    display: flex;
+    flex: 1 1 auto;
+    background-color: var(--bgColor);
+    margin: 0 auto ;
+    padding: 30px 10%;
+}
+.Title__1{
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    cursor:pointer;
+}
+p{
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+.color__1{
+    color: var(--color1);
+}
+.color__2{
+    color: var(--color2);
+}
+.color__3{
+    color: var(--color3);
+}
+.color__4{
+    color: var(--color4);
+}
+.color__5{
+    color: var(--color5);
+}
+.navbar__link{
+    display: inline-block;
+    margin: 0px;
+    padding: 10px 0px;
+    list-style-type: none;
+    gap:0px;
+}
+.navbar__link a{
+    text-decoration: none;
+    color: var(--color5);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 auto;
+    padding: 25px;
+    gap: 0px;
+    transition: all 0.3s ease 0s;
+}
+.navbar__link a:hover{
+    background-color: var(--color1);
+    transition: all 0.3s ease 0s;
+}
