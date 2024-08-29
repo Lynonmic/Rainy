@@ -10,6 +10,7 @@ html{
     scroll-behavior: smooth;
 }
 :root{
+    --m-x:0px;
     --color1:rgb(13, 124, 102);
     --color2:rgb(65, 179, 162);
     --color3:rgb(189, 232, 202);
@@ -19,6 +20,7 @@ html{
 }
 /* Navbar */
 .Navbar{
+    position: sticky;;
     display: flex;
     flex: 1 1 auto;
     background-color: var(--bgColor);
@@ -71,5 +73,124 @@ p{
 }
 .navbar__link a:hover{
     background-color: var(--color1);
+    transition: all 0.3s ease 0s;
+}
+/* content */
+.container{
+    display: flex ;
+    flex: 1 1 auto ;
+    height: 100% ;
+    width: 100% ;
+}
+.row__divs{ 
+    display: flex;
+    max-width: fit-content;
+    margin:0 auto;
+    padding: 0;
+    gap: 10px;
+}
+.sidebar{
+    max-width: 1200px;
+    width: 800px;
+    font-size: 1.5rem;
+    height: 800px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+
+ 
+.scrollbar__inner{
+    padding: 10px;
+}
+
+.spliter__div{
+    width: 5px ;
+    height: 80% ; 
+    margin: 3px 0;
+    background: #9a969676;
+     position: absolute;
+     left: var(--m-x); 
+    margin-top: 9px ;
+    cursor: col-resize;
+}
+.col-div-flex{
+    flex:1 0 0%;
+} 
+.border-div{
+    border: 1px #a3a3a3 ridge;
+    border-radius: 9px;
+}
+/*Answer part*/
+.answer__part{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 55px;
+    background-color: var(--bgColor);
+}
+.answer__bar__bg{
+    
+    max-width: 500px;
+    width: 100%;
+    height: 40px;
+    background-color: var(--bgColor);
+}
+h6{
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: white;
+    margin-left: 10px;
+    padding: 0;
+}
+.group{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 11px;
+    margin-left: 2px;
+    margin-right: 2px;
+    gap: 10px;
+}
+.group__line{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 2px;
+    margin-right: 2px;
+    gap: 10px;
+}
+.answer__question{
+    background-color: var(--color4);
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+}
+.answer__question p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: black;
+    margin: 0 auto;
+    padding: 0;
+}
+.answer__question__clicked{
+    background-color: white;
+    width: 30px;
+    height: 4px;
+    align-items: center;
+    justify-content: center;
+}
+.answer__question:hover{
+    background-color: var(--color3);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+}
+.answer__question:active .answer__question__clicked:hover{
+    background-color: var(--color2);
     transition: all 0.3s ease 0s;
 }
