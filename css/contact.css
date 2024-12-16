@@ -1,0 +1,24 @@
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.contact-address,
+.contact-map {
+  flex: 1;
+  margin: 10px;
+  max-width: 600px;
+}
+
+.contact-address h2,
+.contact-map h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.contact-address p {
+  font-size: 1em;
+  color: #555;
+}
