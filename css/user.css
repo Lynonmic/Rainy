@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #f9f9f9;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+.btn-return {
+  padding: 10px 20px;
+  background-color: #b5915f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-return:hover {
+  background-color: #a5794f;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.user-container {
+  height: fit-content;
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+}
+
+.sidebar .nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar .nav ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar .nav ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.sidebar .nav ul li a:hover {
+  text-decoration: underline;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+.main section {
+  margin-bottom: 20px;
+}
+
+.main section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}

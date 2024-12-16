@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #f9f9f9;
+}
+
+.main {
+  padding: 20px;
+}
+
+.main h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.bento-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.bento-item button {
+  position: absolute;
+  bottom: 0;
+  margin: 20px;
+}
+
+.bento-item h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.bento-item ul {
+  padding-bottom: 20px;
+}
+
+.bento-item ul li {
+  font-size: 16px;
+  color: #666;
+}
+
+.bento-item a {
+  text-decoration: none;
+  color: #b5915f;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+.btn-primary {
+  color: #111111;
+  border-radius: 20px;
+  background-color: #fff;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
