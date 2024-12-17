@@ -7,6 +7,33 @@
     <title>Manage Services</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/table.css" />
+    <style>
+        .btn-save {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-save:hover {
+            background-color: #45a049;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-delete:hover {
+            background-color: #e53935;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,7 +69,7 @@
         <input type="text" name="name" id="name" required>
         <label for="description">Description:</label>
         <input type="text" name="description" id="description" required>
-        <button type="submit" name="save">Save</button>
+        <button type="submit" name="save" class="btn-save">Save</button>
     </form>
 
     <table class="table">
@@ -66,7 +93,7 @@
                     <td>
                         <form method="post" style="display:inline;">
                             <input type="hidden" name="id" value="<?php echo htmlspecialchars($service['id']); ?>">
-                            <button type="submit" name="delete">Delete</button>
+                            <button type="submit" name="delete" class="btn-delete">Delete</button>
                         </form>
                     </td>
                 </tr>

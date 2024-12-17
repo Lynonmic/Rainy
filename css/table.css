@@ -1,5 +1,5 @@
 .table {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
   margin: 0;
   padding: 0;
@@ -16,6 +16,12 @@
   justify-content: center;
   align-items: center;
 }
+
+.btn-save button {
+  border-radius: 10px;
+  background: #ccc;
+}
+
 .form-container {
   display: flex;
   justify-content: center;
@@ -23,4 +29,13 @@
   height: auto;
   width: 100%;
   padding: 10px;
+}
+.header {
+  margin: 10px;
+  width: 100%;
+}
+
+.container {
+  margin: 10px;
+  border: 2px solid #090909;
 }

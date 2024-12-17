@@ -1,25 +1,3 @@
-<?php
-require_once '../php/connect.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['delete']) && !empty($_POST['id'])) {
-        $stmt = $pdo->prepare("DELETE FROM promotions WHERE id = :id");
-        $stmt->execute(['id' => $_POST['id']]);
-    } elseif (isset($_POST['save'])) {
-        if (!empty($_POST['id']) && !empty($_POST['title']) && !empty($_POST['description'])) {
-            $stmt = $pdo->prepare("UPDATE promotions SET title = :title, description = :description WHERE id = :id");
-            $stmt->execute(['title' => $_POST['title'], 'description' => $_POST['description'], 'id' => $_POST['id']]);
-        } elseif (!empty($_POST['title']) && !empty($_POST['description'])) {
-            $stmt = $pdo->prepare("INSERT INTO promotions (title, description) VALUES (:title, :description)");
-            $stmt->execute(['title' => $_POST['title'], 'description' => $_POST['description']]);
-        }
-    }
-}
-
-$stmt = $pdo->query("SELECT * FROM promotions");
-$promotions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,52 +7,106 @@ $promotions = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Manage Promotions</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/table.css" />
+    <style>
+        .btn-save {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-save:hover {
+            background-color: #45a049;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-delete:hover {
+            background-color: #e53935;
+        }
+    </style>
 </head>
 
 <body>
-    <h2>Manage Promotions</h2>
-    <p>Here you can manage promotions.</p>
+    <?php
+    require_once '../php/connect.php';
 
-    <button onclick="toggleForm()">Add Promotion</button>
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['delete']) && !empty($_POST['id'])) {
+            $stmt = $pdo->prepare("DELETE FROM promotions WHERE id = :id");
+            $stmt->execute(['id' => $_POST['id']]);
+        } elseif (isset($_POST['save'])) {
+            if (!empty($_POST['id']) && !empty($_POST['title']) && !empty($_POST['description'])) {
+                $stmt = $pdo->prepare("UPDATE promotions SET title = :title, description = :description WHERE id = :id");
+                $stmt->execute(['title' => $_POST['title'], 'description' => $_POST['description'], 'id' => $_POST['id']]);
+            } elseif (!empty($_POST['title']) && !empty($_POST['description'])) {
+                $stmt = $pdo->prepare("INSERT INTO promotions (title, description) VALUES (:title, :description)");
+                $stmt->execute(['title' => $_POST['title'], 'description' => $_POST['description']]);
+            }
+        }
+    }
 
-    <form id="promotionForm" method="post" style="display: none;">
-        <input type="hidden" name="id" id="id">
-        <label for="title">Title:</label>
-        <input type="text" name="title" id="title" required>
-        <label for="description">Description:</label>
-        <textarea name="description" id="description" required></textarea>
-        <button type="submit" name="save">Save</button>
-    </form>
+    $stmt = $pdo->query("SELECT * FROM promotions");
+    $promotions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    ?>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($promotions as $promotion): ?>
-                <tr onclick="editPromotion(<?php echo htmlspecialchars(json_encode($promotion)); ?>)">
-                    <td><?php if (!empty($promotion['id']))
-                        echo htmlspecialchars($promotion['id']); ?></td>
-                    <td><?php if (!empty($promotion['title']))
-                        echo htmlspecialchars($promotion['title']); ?></td>
-                    <td><?php if (!empty($promotion['description']))
-                        echo htmlspecialchars($promotion['description']); ?>
-                    </td>
-                    <td>
-                        <form method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($promotion['id']); ?>">
-                            <button type="submit" name="delete">Delete</button>
-                        </form>
-                    </td>
+    <div class="container">
+        <div class="header">
+            <h2>Manage Promotions</h2>
+            <p>Here you can manage promotions.</p>
+
+            <button onclick="toggleForm()" class="btn-save">Add Promotion</button>
+        </div>
+
+        <div class="form-container">
+            <form id="promotionForm" method="post" style="display: none;">
+                <input type="hidden" name="id" id="id">
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title" required>
+                <label for="description">Description:</label>
+                <textarea name="description" id="description" required></textarea>
+                <div class="btn"><button type="submit" name="save" class="btn-save">Save</button></div>
+            </form>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($promotions as $promotion): ?>
+                    <tr onclick="editPromotion(<?php echo htmlspecialchars(json_encode($promotion)); ?>)">
+                        <td><?php if (!empty($promotion['id']))
+                            echo htmlspecialchars($promotion['id']); ?></td>
+                        <td><?php if (!empty($promotion['title']))
+                            echo htmlspecialchars($promotion['title']); ?></td>
+                        <td><?php if (!empty($promotion['description']))
+                            echo htmlspecialchars($promotion['description']); ?></td>
+                        <td>
+                            <form method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($promotion['id']); ?>">
+                                <button type="submit" name="delete" class="btn-delete">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 
     <script>
         function editPromotion(promotion) {
