@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manage Services</title>
     <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/table.css" />
 </head>
 
 <body>
@@ -13,14 +14,14 @@
     require_once '../php/connect.php';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['delete'])) {
+        if (isset($_POST['delete']) && !empty($_POST['id'])) {
             $stmt = $pdo->prepare("DELETE FROM services WHERE id = :id");
             $stmt->execute(['id' => $_POST['id']]);
         } elseif (isset($_POST['save'])) {
-            if (!empty($_POST['id'])) {
+            if (!empty($_POST['id']) && !empty($_POST['name']) && !empty($_POST['description'])) {
                 $stmt = $pdo->prepare("UPDATE services SET name = :name, description = :description WHERE id = :id");
                 $stmt->execute(['name' => $_POST['name'], 'description' => $_POST['description'], 'id' => $_POST['id']]);
-            } else {
+            } elseif (!empty($_POST['name']) && !empty($_POST['description'])) {
                 $stmt = $pdo->prepare("INSERT INTO services (name, description) VALUES (:name, :description)");
                 $stmt->execute(['name' => $_POST['name'], 'description' => $_POST['description']]);
             }
@@ -44,7 +45,7 @@
         <button type="submit" name="save">Save</button>
     </form>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -56,9 +57,12 @@
         <tbody>
             <?php foreach ($services as $service): ?>
                 <tr onclick="editService(<?php echo htmlspecialchars(json_encode($service)); ?>)">
-                    <td><?php echo htmlspecialchars($service['id']); ?></td>
-                    <td><?php echo htmlspecialchars($service['name']); ?></td>
-                    <td><?php echo htmlspecialchars($service['description']); ?></td>
+                    <td><?php if (!empty($service['id']))
+                        echo htmlspecialchars($service['id']); ?></td>
+                    <td><?php if (!empty($service['name']))
+                        echo htmlspecialchars($service['name']); ?></td>
+                    <td><?php if (!empty($service['description']))
+                        echo htmlspecialchars($service['description']); ?></td>
                     <td>
                         <form method="post" style="display:inline;">
                             <input type="hidden" name="id" value="<?php echo htmlspecialchars($service['id']); ?>">
@@ -76,6 +80,7 @@
             document.getElementById('name').value = service.name;
             document.getElementById('description').value = service.description;
             document.getElementById('serviceForm').style.display = 'block';
+            setActiveRow(service.id);
         }
 
         function toggleForm() {
@@ -85,6 +90,16 @@
             } else {
                 form.style.display = 'none';
             }
+        }
+
+        function setActiveRow(id) {
+            var rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                row.classList.remove('active');
+                if (row.querySelector('input[name="id"]').value == id) {
+                    row.classList.add('active');
+                }
+            });
         }
     </script>
 </body>

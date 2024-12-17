@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manage Bookings</title>
     <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/table.css" />
 </head>
 
 <body>
@@ -13,14 +14,14 @@
     require_once '../php/connect.php';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['delete'])) {
+        if (isset($_POST['delete']) && !empty($_POST['id'])) {
             $stmt = $pdo->prepare("DELETE FROM bookings WHERE id = :id");
             $stmt->execute(['id' => $_POST['id']]);
         } elseif (isset($_POST['save'])) {
-            if (!empty($_POST['id'])) {
+            if (!empty($_POST['id']) && !empty($_POST['user_id']) && !empty($_POST['service_id']) && !empty($_POST['date'])) {
                 $stmt = $pdo->prepare("UPDATE bookings SET user_id = :user_id, service_id = :service_id, date = :date WHERE id = :id");
                 $stmt->execute(['user_id' => $_POST['user_id'], 'service_id' => $_POST['service_id'], 'date' => $_POST['date'], 'id' => $_POST['id']]);
-            } else {
+            } elseif (!empty($_POST['user_id']) && !empty($_POST['service_id']) && !empty($_POST['date'])) {
                 $stmt = $pdo->prepare("INSERT INTO bookings (user_id, service_id, date) VALUES (:user_id, :service_id, :date)");
                 $stmt->execute(['user_id' => $_POST['user_id'], 'service_id' => $_POST['service_id'], 'date' => $_POST['date']]);
             }
@@ -46,7 +47,7 @@
         <button type="submit" name="save">Save</button>
     </form>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -59,14 +60,18 @@
         <tbody>
             <?php foreach ($bookings as $booking): ?>
                 <tr onclick="editBooking(<?php echo htmlspecialchars(json_encode($booking)); ?>)">
-                    <td><?php echo htmlspecialchars($booking['booking_id']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['user_id']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['service_id']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['booking_date']); ?></td>
+                    <td><?php if (!empty($booking['booking_id']))
+                        echo htmlspecialchars($booking['booking_id']); ?></td>
+                    <td><?php if (!empty($booking['user_id']))
+                        echo htmlspecialchars($booking['user_id']); ?></td>
+                    <td><?php if (!empty($booking['service_id']))
+                        echo htmlspecialchars($booking['service_id']); ?></td>
+                    <td><?php if (!empty($booking['booking_date']))
+                        echo htmlspecialchars($booking['booking_date']); ?></td>
                     <td>
-                        <form method="post" style="display:inline;"></form>
-                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($booking['booking_id']); ?>">
-                        <button type="submit" name="delete">Delete</button>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($booking['booking_id']); ?>">
+                            <button type="submit" name="delete">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -81,6 +86,7 @@
             document.getElementById('service_id').value = booking.service_id;
             document.getElementById('date').value = booking.date;
             document.getElementById('bookingForm').style.display = 'block';
+            setActiveRow(booking.id);
         }
 
         function toggleForm() {
@@ -90,6 +96,16 @@
             } else {
                 form.style.display = 'none';
             }
+        }
+
+        function setActiveRow(id) {
+            var rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                row.classList.remove('active');
+                if (row.querySelector('input[name="id"]').value == id) {
+                    row.classList.add('active');
+                }
+            });
         }
     </script>
 </body>
